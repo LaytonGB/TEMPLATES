@@ -103,6 +103,13 @@ var APIName = APIName || (function () {
             }
         },
 
+        setConfig = function (parts) {
+            toPlayer(`**${parts[2]}** has been changed **from ${state[`${stateName}_${parts[2]}`]} to ${parts[3]}**.`, true);
+            state[`${stateName}_${parts[2]}`] = parts[3];
+            showConfig();
+            return;
+        },
+
         handleInput = function (msg) {
             playerName = msg.who.split(' ', 1)[0];
             playerID = msg.playerid;
@@ -160,7 +167,7 @@ var APIName = APIName || (function () {
                 let values = variable[1] ? variable[1] : [true, false],
                     defaultValue = variable[2] ? variable[2] : true;
                 if (!state[`${stateName}_${variable[0]}`] || !values.includes(state[`${stateName}_${variable[0]}`])) {
-                    error(`**'${variable[0]}'** value **was '${state[`${stateName}_${variable[0]}`]}'** but has now been **set to its default** value, '${defaultValue}'.`, -1);
+                    error(`'${variable[0]}'** value **was '${state[`${stateName}_${variable[0]}`]}'** but has now been **set to its default** value, '${defaultValue}'.`, -1);
                     state[`${stateName}_${variable[0]}`] = defaultValue;
                 }
             })
