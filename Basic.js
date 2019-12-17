@@ -6,6 +6,7 @@ var APIName = APIName || (function () {
         name = 'API Name',
         nameError = name + ' ERROR',
         nameLog = name + ': ',
+        apiCall = '!command',
 
         playerName,
         playerID,
@@ -78,13 +79,13 @@ var APIName = APIName || (function () {
         },
 
         showConfig = function () {
-            let output = `&{template:default} {{name=Area Saving Throw Config}}`;
+            let output = `&{template:default} {{name=${name} Config}}`;
             _.each(states, value => {
                 let acceptableValues = value[1] ? value[1] : [true, false],
                     defaultValue = value[2] ? value[2] : true,
                     currentValue = `${getState(value[0])}`,
                     stringVals = valuesToString(acceptableValues, defaultValue);
-                output += `{{${value[0]}=[${currentValue}](!ast config ${value[0]} ?{New ${value[0]} value${stringVals}})}}`;
+                output += `{{${value[0]}=[${currentValue}](${apiCall} config ${value[0]} ?{New ${value[0]} value${stringVals}})}}`;
             })
             toPlayer(output);
             return;
