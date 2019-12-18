@@ -17,7 +17,7 @@ var APIName = APIName || (function () {
                 macrosArr = [
                     [
                         'MacroName',
-                        'Macro Command'
+                        `${apiCall}`
                     ]
                 ];
             _.each(macrosArr, macro => {
