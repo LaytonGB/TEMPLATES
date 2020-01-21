@@ -114,7 +114,7 @@ var APIName = APIName || (function () {
         handleInput = function (msg) {
             playerName = msg.who.split(' ', 1)[0];
             playerID = msg.playerid;
-            if (msg.type === apiCall && msg.content.split(' ')[0] === `!${apiCall}`) {
+            if (msg.type === 'api' && msg.content.split(' ')[0] === `!${apiCall}`) {
                 var parts = msg.content.split(' ');
             }
         },
