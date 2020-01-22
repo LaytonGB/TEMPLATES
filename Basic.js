@@ -167,7 +167,7 @@ var APIName = APIName || (function () {
             _.each(states, variable => {
                 let values = variable[1] ? variable[1] : [true, false],
                     defaultValue = variable[2] ? variable[2] : true;
-                if (!state[`${stateName}_${variable[0]}`] || !values.includes(state[`${stateName}_${variable[0]}`])) {
+                if (!state[`${stateName}_${variable[0]}`] || (!values.includes(state[`${stateName}_${variable[0]}`]) && variable[1] != 'any')) {
                     error(`'${variable[0]}'** value **was '${state[`${stateName}_${variable[0]}`]}'** but has now been **set to its default** value, '${defaultValue}'.`, -1);
                     state[`${stateName}_${variable[0]}`] = defaultValue;
                 }
