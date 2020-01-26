@@ -85,7 +85,9 @@ var APIName = APIName || (function () {
                     defaultValue = value[2] ? value[2] : true,
                     currentValue = `${getState(value[0])}`,
                     stringVals = valuesToString(acceptableValues, defaultValue);
-                output += `{{${value[0]}=[${currentValue}](${apiCall} config ${value[0]} ?{New ${value[0]} value${stringVals}})}}`;
+                if (!Array.isArray(value[2])) {
+                    output += `{{${value[0]}=[${currentValue}](${apiCall} config ${value[0]} ?{New ${value[0]} value${stringVals}})}}`;
+                }
             })
             toPlayer(output);
             return;
@@ -114,8 +116,12 @@ var APIName = APIName || (function () {
         handleInput = function (msg) {
             playerName = msg.who.split(' ', 1)[0];
             playerID = msg.playerid;
-            if (msg.type === 'api' && msg.content.split(' ')[0] === `!${apiCall}`) {
+            if (msg.type === 'api' && msg.content.split(' ')[0] === `${apiCall}`) {
                 var parts = msg.content.split(' ');
+                if (parts[1] == 'config') {
+                    if (playerIsGM(playerID)) { setConfig(parts); return; }
+                    else { error(`Only GMs can modify API settings.`, 0) }
+                }
             }
         },
 
@@ -173,15 +179,15 @@ var APIName = APIName || (function () {
                 }
             })
         },
-        
+
         registerEventHandlers = function () {
             on('chat:message', handleInput);
         };
 
     return {
-        CheckMacros:checkMacros,
-        StartupChecks:startupChecks,
-        RegisterEventHandlers:registerEventHandlers
+        CheckMacros: checkMacros,
+        StartupChecks: startupChecks,
+        RegisterEventHandlers: registerEventHandlers
     };
 }())
 
