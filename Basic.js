@@ -53,7 +53,7 @@ var APIName = APIName || (function () {
                 ]
             ];
             _.each(commandsArr, command => {
-                let output = `&{template:default} {{name=${code(command[0])} Help}}`;
+                let output = `&{template:default} {{name=${code(command[0])}}}`;
                 _.each(command, function (part, index) {
                     if (index < 3) {
                         let section;
